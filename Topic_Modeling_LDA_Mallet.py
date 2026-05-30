@@ -2,7 +2,7 @@
 # Source notebook: Topic_Modeling_LDA_Mallet.ipynb
 
 # %% [markdown]
-# The code is from: https://medium.com/@kurtsenol21/topic-modeling-lda-mallet-implementation-in-python-part-3-ab03e01b7cd7 
+# The code is from: https://medium.com/@kurtsenol21/topic-modeling-lda-mallet-implementation-in-python-part-3-ab03e01b7cd7
 # We edit a bit and add clean data code before training the LDA model.
 
 # %% [code]
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     main(input_csv, output_csv)
 
 # %% [code]
-df = df = pd.read_csv('reddit_clean_data', encoding='utf-8')
+df = pd.read_csv('reddit_clean_data', encoding='utf-8')
 df
 
 # %% [code]
@@ -100,7 +100,7 @@ def process_words(texts, stop_words=stop_words, allowed_tags=['NOUN', 'ADJ', 'VE
     
     """Convert a document into a list of lowercase tokens, build bigrams-trigrams, implement lemmatization"""
     
-    # remove stopwords, short tokens and letter accents 
+    # remove stopwords, short tokens and letter accents
     texts = [[word for word in simple_preprocess(str(doc), deacc=True, min_len=3) if word not in stop_words] for doc in texts]
     
     # bi-gram and tri-gram implementation

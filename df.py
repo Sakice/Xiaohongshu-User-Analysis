@@ -1,22 +1,33 @@
-# This script was generated from the corresponding Jupyter notebook.
-# Source notebook: df.ipynb
+"""Load and sort the raw Reddit dataset by creation timestamp."""
 
-# %% [code]
-import pandas as pd
 from pathlib import Path
 
-# Keep data paths relative so the notebook works after cloning the repository.
-df_path = Path("reddit_data_1.csv")
-if not df_path.exists():
-    raise FileNotFoundError(
-        "Place reddit_data_1.csv in the project root, or update df_path to another relative path."
-    )
+import pandas as pd
 
-df = pd.read_csv(df_path, encoding="utf-8")
 
-df
+INPUT_CSV = Path("reddit_data_1.csv")
 
-# %% [code]
-df["timestamp"] = pd.to_datetime(df["created"])
-df = df.sort_values(by="timestamp", ascending=True)
-df
+
+def load_data(path=INPUT_CSV):
+    if not path.exists():
+        raise FileNotFoundError(
+            "Place reddit_data_1.csv in the project root, or update INPUT_CSV."
+        )
+    return pd.read_csv(path, encoding="utf-8")
+
+
+def sort_by_timestamp(df):
+    df = df.copy()
+    df["timestamp"] = pd.to_datetime(df["created"])
+    return df.sort_values(by="timestamp", ascending=True)
+
+
+def main():
+    df = load_data()
+    sorted_df = sort_by_timestamp(df)
+    print(sorted_df.head())
+    return sorted_df
+
+
+if __name__ == "__main__":
+    main()

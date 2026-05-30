@@ -1,30 +1,48 @@
-# This script was generated from the corresponding Jupyter notebook.
-# Source notebook: HTML.ipynb
+"""Convert project notebooks to HTML when the source notebooks are available."""
 
-# %% [code]
 import subprocess
-
-notebook_file = "Coherence Score.ipynb"
-html_file = "Coherence Score.html"
+from pathlib import Path
 
 
-cmd = f'jupyter nbconvert --to html --execute "{notebook_file}"'
-process = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+NOTEBOOKS = [
+    ("Coherence Score.ipynb", "Coherence Score.html"),
+    ("graphs.ipynb", "graphs.html"),
+]
 
-# Print conversion output to help debug errors
-print("STDOUT:", process.stdout)
-print("STDERR:", process.stderr)
 
-print(f"HTML file '{html_file}' has been generated successfully.")
+def convert_notebook(notebook_file, html_file):
+    notebook_path = Path(notebook_file)
+    if not notebook_path.exists():
+        print(f"Skipped {notebook_file}: source notebook is not present.")
+        return
 
-# %% [code]
-import os
+    command = [
+        "jupyter",
+        "nbconvert",
+        "--to",
+        "html",
+        "--execute",
+        str(notebook_path),
+        "--output",
+        html_file,
+    ]
+    process = subprocess.run(command, capture_output=True, text=True, check=False)
 
-# Define notebook file names
-notebook_file = "graphs.ipynb"
-html_file = "graphs.html"
+    if process.stdout:
+        print("STDOUT:", process.stdout)
+    if process.stderr:
+        print("STDERR:", process.stderr)
 
-# Run Jupyter nbconvert and execute notebooks to preserve all outputs
-os.system(f"jupyter nbconvert --to html --execute {notebook_file}")
+    if process.returncode != 0:
+        raise RuntimeError(f"Failed to generate {html_file} from {notebook_file}.")
 
-print(f"HTML file '{html_file}' has been generated successfully.")
+    print(f"HTML file '{html_file}' has been generated successfully.")
+
+
+def main():
+    for notebook_file, html_file in NOTEBOOKS:
+        convert_notebook(notebook_file, html_file)
+
+
+if __name__ == "__main__":
+    main()
