@@ -7,11 +7,7 @@ The data is divided into raw data and clean data.
 -	The raw data is stored in the data folder.
 -	The clean data is stored in outputs/reddit_clean_data.
 -----------------
-The code has been saved in 
--	Step_1_Data_mining.ipynb
--	Step_2_Coherence_Score.ipynb,
--	Step_3_Topic_Modeling_LDA_Mallet.ipynb,
--	Step_4_graphs.ipynb
+The analysis code has been saved in the analysis-code folder as Python scripts.
 All the code is written in Python.
 The generated data, models, figures, and HTML results are stored in the outputs folder.
 -----------------
