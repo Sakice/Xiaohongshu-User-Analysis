@@ -15,6 +15,12 @@ The code has been saved in
 All the code is written in Python.
 The code and data results are all stored in HTML format.
 -----------------
+SETUP BEFORE RUNNING DATA COLLECTION:
+- Do not commit real Reddit API credentials to GitHub.
+- Create a local `.env` file from `.env.example`, then fill in your own `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, and `REDDIT_USER_AGENT`.
+- In a notebook or terminal, load these values as environment variables before running `Data_mining.ipynb`.
+- Data files should use repository-relative paths, for example `reddit_data_1.csv` in the project root. If your data is stored elsewhere, update the notebook path to a relative path.
+-----------------
 WARNING:
 -	Due to the non-reproducibility of the LDA model, rerunning Topic_Modeling_LDA_Mallet.ipynb will retrain the model, which will result in differences between the newly generated analysis images and the original ones we used.
 -	If you want to retrain the LDA model, in addition to replacing the data input and output paths in the Topic_Modeling_LDA_Mallet.ipynb file, you also need to update the Mallet file path in the mallet_path function.
