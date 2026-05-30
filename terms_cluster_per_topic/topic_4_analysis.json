@@ -1,0 +1,230 @@
+{
+    "basic_stats": {
+        "total_comments": 3066,
+        "avg_score": 14.730267449445531,
+        "max_score": 1608.0,
+        "top_comments": [
+            {
+                "content": "I feel like there's two distinct spheres of different but *extremely compatible* shitposters in the world, and the Western Democracies and CCP are both working hard to try and keep us from interacting too much, lest we realise our collective power.",
+                "score": 1608
+            },
+            {
+                "content": "Out of the fire and into the frying pan.",
+                "score": 1156
+            },
+            {
+                "content": "Meta dropped a golden goose they spent so much lobbying money to get.\u00a0\n\nIf they just had Zuck shut up for a few weeks they woulda been fine. But to push all this garbage RIGHT BEFORE TikTok goes\u2026 bad moves.\u00a0\n\nTho I could be wrong, I know reels sucks either way, I assume more people are utterly against them for what zuck has been clucking about.",
+                "score": 902
+            },
+            {
+                "content": "It\u2019s really moments like this that makes you realize that there is a lot of bullshit about our respective governments that is designed to keep us from interacting with each other. We are all people of the world trying to have fun and get through this life and without barriers we could learn and have fun.",
+                "score": 888
+            },
+            {
+                "content": "*\"Banning tik tok having a massive positive effect by forcing Americans to talk to actual Chinese people\"* was not on my bingo card but I'll take it.",
+                "score": 853
+            }
+        ]
+    },
+    "network_stats": {
+        "nodes": 100,
+        "edges": 364,
+        "avg_degree": 7.28,
+        "clusters": [
+            {
+                "id": 0,
+                "size": 12,
+                "keywords": [],
+                "avg_score": 30.583333333333332
+            },
+            {
+                "id": 1,
+                "size": 10,
+                "keywords": [],
+                "avg_score": 1.6
+            },
+            {
+                "id": 2,
+                "size": 1,
+                "keywords": [
+                    "federal",
+                    "only",
+                    "requires"
+                ],
+                "avg_score": 154.0
+            },
+            {
+                "id": 3,
+                "size": 32,
+                "keywords": [
+                    "they"
+                ],
+                "avg_score": 13.0
+            },
+            {
+                "id": 4,
+                "size": 22,
+                "keywords": [],
+                "avg_score": 13.863636363636363
+            },
+            {
+                "id": 5,
+                "size": 2,
+                "keywords": [
+                    "want"
+                ],
+                "avg_score": 7.5
+            },
+            {
+                "id": 6,
+                "size": 5,
+                "keywords": [],
+                "avg_score": 324.6
+            },
+            {
+                "id": 7,
+                "size": 1,
+                "keywords": [],
+                "avg_score": 1.0
+            },
+            {
+                "id": 8,
+                "size": 1,
+                "keywords": [
+                    "mama",
+                    "looks",
+                    "bunk"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 9,
+                "size": 1,
+                "keywords": [
+                    "surely",
+                    "they",
+                    "aren't"
+                ],
+                "avg_score": -5.0
+            },
+            {
+                "id": 10,
+                "size": 1,
+                "keywords": [
+                    "will",
+                    "china",
+                    "einen"
+                ],
+                "avg_score": 6.0
+            },
+            {
+                "id": 11,
+                "size": 1,
+                "keywords": [
+                    "played",
+                    "yeah",
+                    "he's"
+                ],
+                "avg_score": 3.0
+            },
+            {
+                "id": 12,
+                "size": 1,
+                "keywords": [
+                    "they",
+                    "that's",
+                    "pathetic"
+                ],
+                "avg_score": 94.0
+            },
+            {
+                "id": 13,
+                "size": 1,
+                "keywords": [
+                    "yeah",
+                    "that\u2019s",
+                    "what"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 14,
+                "size": 1,
+                "keywords": [
+                    "\"owning",
+                    "libs\"",
+                    "energy"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 15,
+                "size": 1,
+                "keywords": [
+                    "wie,",
+                    "bekommen",
+                    "kein"
+                ],
+                "avg_score": 19.0
+            },
+            {
+                "id": 16,
+                "size": 1,
+                "keywords": [
+                    "\u201cminors",
+                    "shouldn\u2019t",
+                    "smoke"
+                ],
+                "avg_score": 3.0
+            },
+            {
+                "id": 17,
+                "size": 1,
+                "keywords": [
+                    "lmfao",
+                    "it\u2019s",
+                    "already"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 18,
+                "size": 2,
+                "keywords": [
+                    "whooshed,",
+                    "friend"
+                ],
+                "avg_score": 7.5
+            },
+            {
+                "id": 19,
+                "size": 1,
+                "keywords": [
+                    "just",
+                    "exporting",
+                    "some"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 20,
+                "size": 1,
+                "keywords": [
+                    "yeah",
+                    "real",
+                    "patriots"
+                ],
+                "avg_score": 4.0
+            },
+            {
+                "id": 21,
+                "size": 1,
+                "keywords": [
+                    "menschenrechte?",
+                    "turbokapitalismus?"
+                ],
+                "avg_score": 4.0
+            }
+        ]
+    }
+}

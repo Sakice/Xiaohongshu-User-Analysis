@@ -1,0 +1,224 @@
+{
+    "basic_stats": {
+        "total_comments": 4598,
+        "avg_score": 20.64723792953458,
+        "max_score": 4022.0,
+        "top_comments": [
+            {
+                "content": "I'm not sure if it's clear how incredibly hilarious this headline is unless you've actually attempted to learn Mandarin on Duolingo (or elsewhere) as a native English speaker. All I can say is... good luck, kiddos.",
+                "score": 4022
+            },
+            {
+                "content": "Funny thing is that their censorship does not work in English except for a few political keywords. You can't say \"\u64cd\u903c\" in Chinese on there but you can say the English translation \"fuck pussy\". Rednote engineers are panicking.",
+                "score": 3866
+            },
+            {
+                "content": "Someone made a post about how they're a \"TikTok refugee\" and this was the first comment that popped up:\n\nhttps://preview.redd.it/yiuc3l5fovce1.png?width=702&format=png&auto=webp&s=503ed79d03e0e8f701757ee1a5d1871503d7102d\n\nwhen I tell you I couldn't stop laughing for five minutes \ud83e\udd23\ud83e\udd23",
+                "score": 2905
+            },
+            {
+                "content": "He is an idiot so I don't expect much of him",
+                "score": 2301
+            },
+            {
+                "content": "I'm dying at the pet photo requests\n\nhttps://preview.redd.it/h98g0l16svce1.jpeg?width=1080&format=pjpg&auto=webp&s=88d3bbc5c41911455a4619083682747e1ed3d087",
+                "score": 1371
+            }
+        ]
+    },
+    "network_stats": {
+        "nodes": 100,
+        "edges": 246,
+        "avg_degree": 4.92,
+        "clusters": [
+            {
+                "id": 0,
+                "size": 1,
+                "keywords": [
+                    "let's",
+                    "fucking",
+                    "go!!!"
+                ],
+                "avg_score": 0.0
+            },
+            {
+                "id": 1,
+                "size": 18,
+                "keywords": [],
+                "avg_score": 4.888888888888889
+            },
+            {
+                "id": 2,
+                "size": 1,
+                "keywords": [
+                    "exactly.",
+                    "ditch",
+                    "them"
+                ],
+                "avg_score": 8.0
+            },
+            {
+                "id": 3,
+                "size": 1,
+                "keywords": [
+                    "understand",
+                    "things"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 4,
+                "size": 1,
+                "keywords": [
+                    "does",
+                    "speak",
+                    "mandarin??"
+                ],
+                "avg_score": 9.0
+            },
+            {
+                "id": 5,
+                "size": 1,
+                "keywords": [
+                    "nah.",
+                    "suck",
+                    "some"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 6,
+                "size": 1,
+                "keywords": [
+                    "brainwashed"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 7,
+                "size": 18,
+                "keywords": [],
+                "avg_score": 1.5
+            },
+            {
+                "id": 8,
+                "size": 1,
+                "keywords": [
+                    "still",
+                    "haven't",
+                    "moved"
+                ],
+                "avg_score": 19.0
+            },
+            {
+                "id": 9,
+                "size": 12,
+                "keywords": [],
+                "avg_score": 12.0
+            },
+            {
+                "id": 10,
+                "size": 12,
+                "keywords": [],
+                "avg_score": 222.83333333333334
+            },
+            {
+                "id": 11,
+                "size": 7,
+                "keywords": [],
+                "avg_score": 0.7142857142857143
+            },
+            {
+                "id": 12,
+                "size": 1,
+                "keywords": [
+                    "then",
+                    "you\u2019d",
+                    "know"
+                ],
+                "avg_score": -13.0
+            },
+            {
+                "id": 13,
+                "size": 1,
+                "keywords": [
+                    "power",
+                    "rangers",
+                    "where"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 14,
+                "size": 1,
+                "keywords": [
+                    "what",
+                    "stupid",
+                    "question."
+                ],
+                "avg_score": 0.0
+            },
+            {
+                "id": 15,
+                "size": 1,
+                "keywords": [
+                    "lmfao"
+                ],
+                "avg_score": 6.0
+            },
+            {
+                "id": 16,
+                "size": 1,
+                "keywords": [
+                    "you\u2019re",
+                    "troll"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 17,
+                "size": 1,
+                "keywords": [
+                    "they\u2019re"
+                ],
+                "avg_score": 10.0
+            },
+            {
+                "id": 18,
+                "size": 1,
+                "keywords": [
+                    "coming",
+                    "from",
+                    "someone"
+                ],
+                "avg_score": 3.0
+            },
+            {
+                "id": 19,
+                "size": 17,
+                "keywords": [],
+                "avg_score": 6.647058823529412
+            },
+            {
+                "id": 20,
+                "size": 1,
+                "keywords": [
+                    "firearms",
+                    "should",
+                    "fine"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 21,
+                "size": 1,
+                "keywords": [
+                    "really",
+                    "said",
+                    "\"the"
+                ],
+                "avg_score": 14.0
+            }
+        ]
+    }
+}

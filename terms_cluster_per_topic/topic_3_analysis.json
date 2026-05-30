@@ -1,0 +1,124 @@
+{
+    "basic_stats": {
+        "total_comments": 3341,
+        "avg_score": 14.10416043100868,
+        "max_score": 2837.0,
+        "top_comments": [
+            {
+                "content": "Most people believe the reason the Federal Government banned TikTok was because of data collection, which is for sure part of it, but that's not the main reason it was banned. It was banned because of concerns that a foreign owned social media app, particularly one influenced directly by a foreign Government can manipulate US citizens into behaving in a way that benefits them.\n\nNo one knew what Rednote was 2 weeks ago in the US. All it took was a few well placed posts encouraging people to flock to a highly monitored highly censored app directly controlled by the CCP and suddenly an unknown app in the United States rocketed to the number 1 app in the country. \n\nThis is an app that frequently removes content mentioning LGBTQ rights, anything they view as immodest, and any discussion critizing the CCP- a party actively engaging in Genocide against the Uyghurs. Yet you have a flood of young people who just months ago decried the US's response to the Gazan crisis flocking to an app controlled by a government openly and unapologetically engaging in Genocide. \n\nThis was not an organic movement. If one is upset at the hamstringing of free speech their first reaction would not be to rush to an app that is controlled by a government that has some of the worst rankings of free speech globally. All it took was a few well placed posts on people's fyp saying \"Give the US the middle finger and join rednote! Show them we don't care!\"\n\n",
+                "score": 2837
+            },
+            {
+                "content": "Do you think that this very well could mean a further push left in our youth? It seems like Americans for the most part are interacting in good faith to these kinds of posts. \n\nI'm really curious of what the American government will do now, because I believe they just helped radicalize a lot of people that wouldn't have sought out this information otherwise. ",
+                "score": 2669
+            },
+            {
+                "content": " I wonder if Elon has forgotten he owns Vine via Twitter, you would think he would be trying to revive that as the choice.",
+                "score": 2574
+            },
+            {
+                "content": "China: winning the soft power war by getting all westerners onto their spyware social media\n\nAmerica: playing 4D chess by invading Chinese social media to push liberalism and collapse the CCP\n\nWho will win? Find out next time on Geopol Z Kai!",
+                "score": 1834
+            },
+            {
+                "content": "It's hilarious that by trying to get rid of a foreign based app, they ended up pushing the populace to a more foreign based app\n\nBut seriously, if Experian can leak my information and walk away, what do we really care about this data?",
+                "score": 1409
+            }
+        ]
+    },
+    "network_stats": {
+        "nodes": 100,
+        "edges": 666,
+        "avg_degree": 13.32,
+        "clusters": [
+            {
+                "id": 0,
+                "size": 25,
+                "keywords": [],
+                "avg_score": 20.2
+            },
+            {
+                "id": 1,
+                "size": 23,
+                "keywords": [],
+                "avg_score": 23.695652173913043
+            },
+            {
+                "id": 2,
+                "size": 16,
+                "keywords": [],
+                "avg_score": 9.4375
+            },
+            {
+                "id": 3,
+                "size": 1,
+                "keywords": [
+                    "specifically",
+                    "like",
+                    "what,"
+                ],
+                "avg_score": 4.0
+            },
+            {
+                "id": 4,
+                "size": 1,
+                "keywords": [
+                    "[don\u2019t",
+                    "stop"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 5,
+                "size": 1,
+                "keywords": [
+                    "or...",
+                    "owns",
+                    "another"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 6,
+                "size": 16,
+                "keywords": [],
+                "avg_score": 7.875
+            },
+            {
+                "id": 7,
+                "size": 14,
+                "keywords": [],
+                "avg_score": 13.214285714285714
+            },
+            {
+                "id": 8,
+                "size": 1,
+                "keywords": [
+                    "never",
+                    "heard",
+                    "trust"
+                ],
+                "avg_score": -1.0
+            },
+            {
+                "id": 9,
+                "size": 1,
+                "keywords": [
+                    "good",
+                    "point"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 10,
+                "size": 1,
+                "keywords": [
+                    "that\u2019s",
+                    "what",
+                    "yapdollar"
+                ],
+                "avg_score": 1.0
+            }
+        ]
+    }
+}

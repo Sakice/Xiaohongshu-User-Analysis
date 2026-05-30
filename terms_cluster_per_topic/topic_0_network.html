@@ -1,0 +1,321 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#e7b14d", "id": "4200", "label": "Score: 29", "shape": "dot", "size": 32.9, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 29\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Certamente \u00e9 fic o coment\u00e1rio do colega acima, mas deviam mesmo tratar \"mission\u00e1rios\" que viajam o mundo pra espalhar o lixo deles como inimigos. \u00c9 um puta dum problem\u00e3o. S\u00f3 ver o crescimento da igreja evang\u00e9lica no Brasil e v\u00e1rios pa\u00edses da \u00c1frica ocidental. Sempre ligados aos setores mais reacion\u00e1rios e conservadores da sociedade. \u00c9 um projeto primariamente pol\u00edtico disfar\u00e7ado de algum tipo de miss\u00e3o divina.\n        \u003c/div\u003e\n        "}, {"color": "#0f576b", "id": "2999", "label": "Score: 32", "shape": "dot", "size": 33.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 32\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            The Cold War never ended, it just added another country to the list.\n        \u003c/div\u003e\n        "}, {"color": "#31e3bd", "id": "3738", "label": "Score: 3", "shape": "dot", "size": 30.3, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 3\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            ASSCHEWALLY.\n        \u003c/div\u003e\n        "}, {"color": "#eca5bc", "id": "264", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Any and all posts/comments that will mislead users will be removed. \n\nPosts containing survivorship bias/anecdotal fallacy\u2019s are subject for removal\n        \u003c/div\u003e\n        "}, {"color": "#bb816a", "id": "3324", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Back when Jan 6th was happening and those idiots were storming The Capital the Chinese were broadcasting it and basically saying \"This is what happens when you have too much freedom\"\n        \u003c/div\u003e\n        "}, {"color": "#dca637", "id": "3237", "label": "Score: 34", "shape": "dot", "size": 33.4, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 34\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Right? It\u2019s just a super fucked up warning by him\u2026\n        \u003c/div\u003e\n        "}, {"color": "#947b41", "id": "2544", "label": "Score: 6", "shape": "dot", "size": 30.6, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 6\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            I live in Taiwan and as much as I click \"not interested\" I get political stuff every time I open the app\n        \u003c/div\u003e\n        "}, {"color": "#2f6cd5", "id": "1395", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Are you Chinese?\n        \u003c/div\u003e\n        "}, {"color": "#239057", "id": "1221", "label": "Score: 8", "shape": "dot", "size": 30.8, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 8\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Why would the CCP hate foreigners using Rednote?\n\nForeigners still have to comply with Xiaohongshu (really, the CCP\u0027s) [content policies](https://agree.xiaohongshu.com/h5/terms/ZXXY20221213003/-1), which include things like\n\n\u003e 1.2 Practice socialist core values / 1.3 Promote patriotism, collectivism and socialism\n\n\u003e Prohibits 2.1.11 Attacks to discredit party and national leaders, fabricate negative information about leaders, and abuse the image of leaders\n\n\u003e Prohibits 2.1.12 Content that violates public order and customs, such as vulgar marriage\n\nand far more. \n\nPolitical debate isn\u0027t allowed on rednote because the CCP only allows the ideas of the party.\n        \u003c/div\u003e\n        "}, {"color": "#d2cb01", "id": "1908", "label": "Score: 5", "shape": "dot", "size": 30.5, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 5\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Nah, wanting to have an authoritarian government that hates criticism and gay people just because it\u2019s kinda sorta but not really communist makes ya a tankie.\n        \u003c/div\u003e\n        "}, {"color": "#64427e", "id": "1491", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            I don\u0027t think that\u0027s what\u0027s happening here unless I am misunderstanding your comment?\n\nThey don\u0027t want the US refugees INFLUENCING their Chinese population.\n        \u003c/div\u003e\n        "}, {"color": "#a2c680", "id": "1139", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            that article is 7 years old. It may not be a great representation of the current day.\n        \u003c/div\u003e\n        "}, {"color": "#efcaae", "id": "1233", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            [removed]\n        \u003c/div\u003e\n        "}, {"color": "#269950", "id": "893", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Ok now explain how any of these apps are \"not bad\" when compared to TikTok or any Meta app or Twitter. By the way, never heard of a single one of these, so the odds the people I follow on TikTok are going onto them are probably hovering around zero.\n        \u003c/div\u003e\n        "}, {"color": "#e0cbef", "id": "2694", "label": "Score: 29", "shape": "dot", "size": 32.9, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 29\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            [removed]\n        \u003c/div\u003e\n        "}, {"color": "#d21645", "id": "2673", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            [removed]\n        \u003c/div\u003e\n        "}, {"color": "#0d1bc8", "id": "2642", "label": "Score: 0", "shape": "dot", "size": 30.0, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 0\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            [deleted]\n        \u003c/div\u003e\n        "}, {"color": "#a59fb4", "id": "3622", "label": "Score: 3", "shape": "dot", "size": 30.3, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 3\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Bots\n        \u003c/div\u003e\n        "}, {"color": "#653ea9", "id": "2702", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            I was born in 2003, I am very pessimistic because I hold different opinion about the first question. I do believe people who born in before 2003 is more open minded but after this\u2026 I sometimes find that on topics about LGBTQ, medical insurance, freedom of speech and democracy. I feel People who born in 90s are more liberal than people who born after 2005.\n        \u003c/div\u003e\n        "}, {"color": "#4473b6", "id": "1568", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Your reddit is bugging out then, I only made one comment. \n\nUnless you are talking about something else.\n        \u003c/div\u003e\n        "}, {"color": "#3c9c3a", "id": "3636", "label": "Score: 3", "shape": "dot", "size": 30.3, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 3\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Yes. Did you?\n        \u003c/div\u003e\n        "}, {"color": "#d88c88", "id": "2343", "label": "Score: 31", "shape": "dot", "size": 33.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 31\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Good thing that\u2019s never happened!\n        \u003c/div\u003e\n        "}, {"color": "#4a5120", "id": "3924", "label": "Score: 23", "shape": "dot", "size": 32.3, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 23\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            It will just be another chapter of that wasn\u0027t real communism.\n        \u003c/div\u003e\n        "}, {"color": "#bae0c1", "id": "3082", "label": "Score: 91", "shape": "dot", "size": 39.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 91\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Lmao this gives off \u201cthe mysterious hacker 4chan\u201d vibes. \n\nIt\u2019s just another forum and has been for years, nothing more, nothing less.\n        \u003c/div\u003e\n        "}, {"color": "#13273d", "id": "1290", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            u/BooLord \u2013 your comment has been removed for breaking Rule 2: \n\n\u003e **Don\u0027t be rude or hostile to other users.** Your comment will be removed even if most of it is solid, another user was rude to you first, or you feel your remark was justified. Report other violations; do not retaliate. [See the wiki page for more information](http://www.reddit.com/r/changemyview/wiki/rules#wiki_rule_2).\n\nIf you would like to appeal, review our appeals process [here](https://www.reddit.com/r/changemyview/wiki/modstandards#wiki_appeal_process), then [message the moderators by clicking this link](https://www.reddit.com/message/compose?to=%2Fr%2Fchangemyview\u0026subject=Rule%202%20Appeal%20BooLord\u0026message=BooLord%20would%20like%20to%20appeal%20the%20removal%20of%20\\[their%20comment\\]\\(https://www.reddit.com/r/changemyview/comments/1i22ljg/-/m7bz2za/\\)%20because\\.\\.\\.) within one week of this notice being posted. Please note that multiple violations will lead to a ban, as explained in our [moderation standards](https://www.reddit.com/r/changemyview/wiki/modstandards).\n        \u003c/div\u003e\n        "}, {"color": "#e6f111", "id": "1903", "label": "Score: 22", "shape": "dot", "size": 32.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 22\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            ~~get it free~~ profit billions in the process\n        \u003c/div\u003e\n        "}, {"color": "#12b76f", "id": "4101", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Yeah the United States spends billions on it\n        \u003c/div\u003e\n        "}, {"color": "#3580bb", "id": "2844", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Until you can\u0027t.\n        \u003c/div\u003e\n        "}, {"color": "#246ada", "id": "2473", "label": "Score: 13", "shape": "dot", "size": 31.3, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 13\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Exactly, some of my work involves working with people who the U.S. government has targeted in the past. I don\u0027t have a fear of the Chinese government having my info, like what are they gonna do with it? If I was Chinese I might feel differently, but my priority is the capitalist murder machine that I call home.\n        \u003c/div\u003e\n        "}, {"color": "#5e49c2", "id": "864", "label": "Score: 3", "shape": "dot", "size": 30.3, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 3\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            What else are we supposed to do\n        \u003c/div\u003e\n        "}, {"color": "#35f961", "id": "1819", "label": "Score: -1", "shape": "dot", "size": 29.9, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: -1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            None they all moved to red note. Thank God it was there.\n        \u003c/div\u003e\n        "}, {"color": "#321dfb", "id": "1750", "label": "Score: -2", "shape": "dot", "size": 29.8, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: -2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Joining an American social media *was literally proven to us in 2013 to be exactly this*. Did you [forget?](https://en.m.wikipedia.org/wiki/2010s_global_surveillance_disclosures)\n\n\n\u003e Join the American government\u0027s propaganda and data collection initiative to.... have fun?\n\n\nRefusing to use Chinese app. Stunning *and* brave.\u00a0\n        \u003c/div\u003e\n        "}, {"color": "#677994", "id": "794", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            For Boomers.\n        \u003c/div\u003e\n        "}, {"color": "#9f00c7", "id": "1236", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            https://theintercept.com/2025/01/09/facebook-instagram-meta-hate-speech-content-moderation/\n        \u003c/div\u003e\n        "}, {"color": "#54ec84", "id": "991", "label": "Score: 40", "shape": "dot", "size": 34.0, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 40\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            yes 6/4 references june 4th incident aka tiananmen square\n        \u003c/div\u003e\n        "}, {"color": "#57a938", "id": "2220", "label": "Score: 11", "shape": "dot", "size": 31.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 11\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            No need to make us look worse when the reality of capitalism is already so fucked.\n        \u003c/div\u003e\n        "}, {"color": "#88342c", "id": "2315", "label": "Score: -1", "shape": "dot", "size": 29.9, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: -1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            The NSA used American apps to follow the location of journalists? Oh weird TikTok admitted China did that.\n        \u003c/div\u003e\n        "}, {"color": "#3dd811", "id": "501", "label": "Score: 4", "shape": "dot", "size": 30.4, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 4\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            [deleted]\n        \u003c/div\u003e\n        "}, {"color": "#b2a41c", "id": "60", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Fucking great reply my man \ud83d\udc4f\n        \u003c/div\u003e\n        "}, {"color": "#5b92b9", "id": "2300", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            from a UK bengals fan can relate to the 1st comment\n        \u003c/div\u003e\n        "}, {"color": "#504f5a", "id": "3470", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Hi there. Your post has been removed since your account has very low karma. Please try posting again once you have engaged more on the platform. Have a great day!\n\n*I am a bot, and this action was performed automatically. Please [contact the moderators of this subreddit](/message/compose/?to=/r/Tiktokhelp) if you have any questions or concerns.*\n        \u003c/div\u003e\n        "}, {"color": "#8fd9d2", "id": "3978", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Will this review go through or is it stuck: https://imgur.com/a/tRv9rag\n        \u003c/div\u003e\n        "}, {"color": "#60d0ef", "id": "3032", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Rednote really isnt the win you think it is.\n        \u003c/div\u003e\n        "}, {"color": "#9cb4b5", "id": "1973", "label": "Score: 271", "shape": "dot", "size": 57.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 271\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            My back hurts just reading that list.\n        \u003c/div\u003e\n        "}, {"color": "#103bbd", "id": "3943", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Not really, it wasn\u2019t great for different reasons\n        \u003c/div\u003e\n        "}, {"color": "#baf626", "id": "3831", "label": "Score: 35", "shape": "dot", "size": 33.5, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 35\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Have a look one day about Chinese Jews and how the CCP have treated them and then tell me this is not intentional\n        \u003c/div\u003e\n        "}, {"color": "#58addb", "id": "3179", "label": "Score: 3", "shape": "dot", "size": 30.3, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 3\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            That seems to be the general response. I guess the next question is why is China supposed to be our enemy? I think most Americans just dont feel that way.\n        \u003c/div\u003e\n        "}, {"color": "#d17957", "id": "2587", "label": "Score: 4", "shape": "dot", "size": 30.4, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 4\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            [removed]\n        \u003c/div\u003e\n        "}, {"color": "#646823", "id": "1535", "label": "Score: -4", "shape": "dot", "size": 29.6, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: -4\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            So rules for thee but not for me?\u00a0\n        \u003c/div\u003e\n        "}, {"color": "#c56eb3", "id": "3567", "label": "Score: -2", "shape": "dot", "size": 29.8, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: -2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Be serious \ud83d\ude2d\n        \u003c/div\u003e\n        "}, {"color": "#da7264", "id": "689", "label": "Score: 68", "shape": "dot", "size": 36.8, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 68\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            I don\u0027t know any Chinese. Would I be able to use the app at all?\n        \u003c/div\u003e\n        "}, {"color": "#ee374b", "id": "1900", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Oh yeah! And everyone will follow immediately! Google will put it in the top search result page from day one!\n        \u003c/div\u003e\n        "}, {"color": "#c62767", "id": "3215", "label": "Score: 0", "shape": "dot", "size": 30.0, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 0\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Pero que dice Harry?, qu\u00e9 dice!\n        \u003c/div\u003e\n        "}, {"color": "#bceed8", "id": "1167", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            \u003eYet you have a flood of young people who just months ago decried the US\u0027s response to the Gazan crisis flocking to an app controlled by a government openly and unapologetically engaging in Genocide.\n\nThis needs to be emphasized.\n        \u003c/div\u003e\n        "}, {"color": "#ccbfad", "id": "3552", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            I only read CCP agitprop in the original Chinese.\n        \u003c/div\u003e\n        "}, {"color": "#3e549b", "id": "1789", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Wake me up when Taiwan starts actually being aggressive towards Mongolia and banning discussion on it\n        \u003c/div\u003e\n        "}, {"color": "#f0f931", "id": "3527", "label": "Score: 9", "shape": "dot", "size": 30.9, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 9\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Someone getting fucked by America might be too political\n        \u003c/div\u003e\n        "}, {"color": "#fa1b00", "id": "558", "label": "Score: -4", "shape": "dot", "size": 29.6, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: -4\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Ok mb 34 years \ud83e\udd2a\n        \u003c/div\u003e\n        "}, {"color": "#7672db", "id": "1178", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            [deleted]\n        \u003c/div\u003e\n        "}, {"color": "#18f54a", "id": "1345", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            It is when it involves moving towards something controlled by a different government that does even more such overstepping.\n        \u003c/div\u003e\n        "}, {"color": "#370d34", "id": "499", "label": "Score: 3", "shape": "dot", "size": 30.3, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 3\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            I would like to keep both apps. They\u0027re very different experiences and I like the vibes\n        \u003c/div\u003e\n        "}, {"color": "#c92dbe", "id": "1598", "label": "Score: 0", "shape": "dot", "size": 30.0, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 0\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            But they\u2019re a communist country\u2026.\n        \u003c/div\u003e\n        "}, {"color": "#e57ccd", "id": "904", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Kk\n        \u003c/div\u003e\n        "}, {"color": "#600c93", "id": "3869", "label": "Score: 9", "shape": "dot", "size": 30.9, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 9\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Yeh the comments sent me \ud83d\ude2d\n        \u003c/div\u003e\n        "}, {"color": "#940dc4", "id": "1803", "label": "Score: 0", "shape": "dot", "size": 30.0, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 0\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Hi Winnie the Pooh.\n        \u003c/div\u003e\n        "}, {"color": "#5e578a", "id": "4333", "label": "Score: 3", "shape": "dot", "size": 30.3, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 3\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Do you happen to have a link to that CNA video?\n        \u003c/div\u003e\n        "}, {"color": "#532110", "id": "620", "label": "Score: 7", "shape": "dot", "size": 30.7, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 7\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            I think that was directed at the US government.\n        \u003c/div\u003e\n        "}, {"color": "#548aa6", "id": "1643", "label": "Score: -2", "shape": "dot", "size": 29.8, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: -2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Yeah, context matters. This is silly. No one is going to think you said that.\n        \u003c/div\u003e\n        "}, {"color": "#8ce266", "id": "2736", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Just learned the term tyrannicide, apparently Britannica says the person who does it is called a tyrannicide as well. Would a CEO be considered a tyrant as well as a national or political leader?\n        \u003c/div\u003e\n        "}, {"color": "#43247b", "id": "543", "label": "Score: 49", "shape": "dot", "size": 34.9, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 49\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            The app relies heavily on manual human reviewers to enforce those normative rules (automated review is reserved for political and violent content). So the rules tend to either be over-enforced or under-enforced depending on who is assigned to look at your post.\n        \u003c/div\u003e\n        "}, {"color": "#64077e", "id": "790", "label": "Score: 3", "shape": "dot", "size": 30.3, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 3\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            It\u2019s now the magaverse\n        \u003c/div\u003e\n        "}, {"color": "#79be7f", "id": "2626", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            It is an evil dystopian regime though. Americans are already being asked not to talk about politics in front of the Chinese in case they start getting notions about democracy and human rights.\u00a0\n\n\nGo on there and talk about the Tiananmen Square massacre or the Uighur genocide and see how long your post stays up.\u00a0\n        \u003c/div\u003e\n        "}, {"color": "#6a7ba4", "id": "1650", "label": "Score: 12", "shape": "dot", "size": 31.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 12\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            https://en.m.wikipedia.org/wiki/Firefly_(TV_series)\n        \u003c/div\u003e\n        "}, {"color": "#723cdd", "id": "1795", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Then +1 to your successful hunt.\n        \u003c/div\u003e\n        "}, {"color": "#2f2e8b", "id": "1681", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            And that\u2019s why I only got a C in college level Spanish.\n        \u003c/div\u003e\n        "}, {"color": "#65a4c1", "id": "87", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Mostly singers and painters.\n        \u003c/div\u003e\n        "}, {"color": "#785c8a", "id": "4089", "label": "Score: -1", "shape": "dot", "size": 29.9, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: -1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Relax, nobodies blocking you, and I won\u0027t report you to the party. I\u0027m thinking more along the lines of criticizing the communist party for its forced assimilation of Tibet, mistreatment of the uyghurs, tiananmen square, etc.\n        \u003c/div\u003e\n        "}, {"color": "#51e538", "id": "2163", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            \ud83d\ude02\n        \u003c/div\u003e\n        "}, {"color": "#39ef13", "id": "4117", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Unfortuntly he didnt even need AI\n        \u003c/div\u003e\n        "}, {"color": "#5b5c6b", "id": "3916", "label": "Score: 7", "shape": "dot", "size": 30.7, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 7\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            The \u767d\u5de6 won\u2019t know what to do with themselves.\n        \u003c/div\u003e\n        "}, {"color": "#ddb66c", "id": "276", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            [removed]\n        \u003c/div\u003e\n        "}, {"color": "#879a7a", "id": "3484", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            We went to the most communist chinese app we could find on purpose.\n        \u003c/div\u003e\n        "}, {"color": "#e8b975", "id": "3960", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Lmao\n        \u003c/div\u003e\n        "}, {"color": "#6a96f8", "id": "831", "label": "Score: 4", "shape": "dot", "size": 30.4, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 4\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Are you a hippie or a MIC operative?\n        \u003c/div\u003e\n        "}, {"color": "#57090c", "id": "1260", "label": "Score: 2", "shape": "dot", "size": 30.2, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            \u003eThe issue that TikTok brings to light is that it is the first app to really do this and make people see situations through multiple perspectives, which threatens our government\n\nMultiple perspectives really? \n\nIts really just one perspective being pushed on tiktok\n\nYou can tell by the engagement numbers. The favored view is through the roof and the not so favored one is barely shown.\n\nAfter Oct 7, it took almost 2 weeks for me to see any content that was not explicitly anti israel.\n        \u003c/div\u003e\n        "}, {"color": "#63c2ab", "id": "151", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            [removed]\n        \u003c/div\u003e\n        "}, {"color": "#4a68b3", "id": "4125", "label": "Score: 3", "shape": "dot", "size": 30.3, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 3\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            It\u0027s 2025 now, everything is always political, also what the fuck is a constructive conversation?\n        \u003c/div\u003e\n        "}, {"color": "#54ff60", "id": "3941", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Yes\n        \u003c/div\u003e\n        "}, {"color": "#dfed0c", "id": "467", "label": "Score: 7", "shape": "dot", "size": 30.7, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 7\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            [removed]\n        \u003c/div\u003e\n        "}, {"color": "#09215d", "id": "1502", "label": "Score: -4", "shape": "dot", "size": 29.6, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: -4\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            nothing happened june 4 commrad\n        \u003c/div\u003e\n        "}, {"color": "#353b08", "id": "2029", "label": "Score: 9", "shape": "dot", "size": 30.9, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 9\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Who knows.\n        \u003c/div\u003e\n        "}, {"color": "#870e7f", "id": "3001", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            [removed]\n        \u003c/div\u003e\n        "}, {"color": "#cb0f29", "id": "1957", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            China doesn\u2019t follow Trotskyist principles, though\u2026 No successful revolution does.\n        \u003c/div\u003e\n        "}, {"color": "#9b2df2", "id": "217", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            \"Function upgrade note available\" is basically \"this function isn\u0027t available to your region.\"\n        \u003c/div\u003e\n        "}, {"color": "#e6f74a", "id": "1559", "label": "Score: -2", "shape": "dot", "size": 29.8, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: -2\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            You cant understand people\u0027s desire for the truth?\n        \u003c/div\u003e\n        "}, {"color": "#4f2d71", "id": "2870", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            What are you even talking about?! You\u2019re actually just a potato with eyes.\n        \u003c/div\u003e\n        "}, {"color": "#c7191d", "id": "297", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Hi there. Your post has been removed since your account has very low karma. Please try posting again once you have engaged more on the platform. Have a great day!\n\n*I am a bot, and this action was performed automatically. Please [contact the moderators of this subreddit](/message/compose/?to=/r/Tiktokhelp) if you have any questions or concerns.*\n        \u003c/div\u003e\n        "}, {"color": "#a3b03b", "id": "4272", "label": "Score: 3", "shape": "dot", "size": 30.3, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 3\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Maybe I misread your comment. My bad if I did\n        \u003c/div\u003e\n        "}, {"color": "#89f5b8", "id": "2564", "label": "Score: 25", "shape": "dot", "size": 32.5, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 25\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            TIL being expressive is bad\n        \u003c/div\u003e\n        "}, {"color": "#8f1007", "id": "3901", "label": "Score: 1", "shape": "dot", "size": 30.1, "title": "\n        \u003cdiv style=\u0027max-width:400px; white-space:normal; font-size:12px;\u0027\u003e\n            \u003cb\u003eScore: 1\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\n            Why is it taking so much time to load?\n        \u003c/div\u003e\n        "}]);
+                  edges = new vis.DataSet([{"from": "2999", "to": "3924", "value": 0.15}, {"from": "2999", "to": "4101", "value": 0.1111111111111111}, {"from": "2999", "to": "3032", "value": 0.10526315789473684}, {"from": "2999", "to": "3916", "value": 0.10526315789473684}, {"from": "2999", "to": "3901", "value": 0.10526315789473684}, {"from": "2999", "to": "1903", "value": 0.1111111111111111}, {"from": "2999", "to": "1973", "value": 0.11764705882352941}, {"from": "264", "to": "3924", "value": 0.1111111111111111}, {"from": "3324", "to": "3831", "value": 0.11627906976744186}, {"from": "3237", "to": "3527", "value": 0.11764705882352941}, {"from": "2544", "to": "3552", "value": 0.125}, {"from": "2544", "to": "689", "value": 0.10344827586206896}, {"from": "2544", "to": "499", "value": 0.10344827586206896}, {"from": "2544", "to": "1681", "value": 0.1111111111111111}, {"from": "1395", "to": "1568", "value": 0.10526315789473684}, {"from": "1395", "to": "2844", "value": 0.2}, {"from": "1395", "to": "2870", "value": 0.14285714285714285}, {"from": "1395", "to": "864", "value": 0.1111111111111111}, {"from": "1395", "to": "831", "value": 0.25}, {"from": "1908", "to": "4333", "value": 0.125}, {"from": "1908", "to": "1167", "value": 0.1509433962264151}, {"from": "1908", "to": "1598", "value": 0.10714285714285714}, {"from": "1491", "to": "620", "value": 0.15384615384615385}, {"from": "1139", "to": "3924", "value": 0.16666666666666666}, {"from": "1139", "to": "3943", "value": 0.13636363636363635}, {"from": "1139", "to": "3831", "value": 0.11764705882352941}, {"from": "1139", "to": "3179", "value": 0.10810810810810811}, {"from": "1139", "to": "1345", "value": 0.12903225806451613}, {"from": "1139", "to": "2736", "value": 0.125}, {"from": "1139", "to": "4125", "value": 0.10714285714285714}, {"from": "1233", "to": "2694", "value": 1.0}, {"from": "1233", "to": "2673", "value": 1.0}, {"from": "1233", "to": "2587", "value": 1.0}, {"from": "1233", "to": "3001", "value": 1.0}, {"from": "1233", "to": "276", "value": 1.0}, {"from": "1233", "to": "151", "value": 1.0}, {"from": "1233", "to": "467", "value": 1.0}, {"from": "893", "to": "2315", "value": 0.11538461538461539}, {"from": "893", "to": "1167", "value": 0.10144927536231885}, {"from": "893", "to": "1260", "value": 0.10526315789473684}, {"from": "2694", "to": "3001", "value": 1.0}, {"from": "2694", "to": "2673", "value": 1.0}, {"from": "2694", "to": "2587", "value": 1.0}, {"from": "2694", "to": "276", "value": 1.0}, {"from": "2694", "to": "151", "value": 1.0}, {"from": "2694", "to": "467", "value": 1.0}, {"from": "2673", "to": "3001", "value": 1.0}, {"from": "2673", "to": "2587", "value": 1.0}, {"from": "2673", "to": "276", "value": 1.0}, {"from": "2673", "to": "151", "value": 1.0}, {"from": "2673", "to": "467", "value": 1.0}, {"from": "2642", "to": "501", "value": 1.0}, {"from": "2642", "to": "1178", "value": 1.0}, {"from": "2702", "to": "2473", "value": 0.16049382716049382}, {"from": "1568", "to": "1643", "value": 0.10344827586206896}, {"from": "1568", "to": "2870", "value": 0.10714285714285714}, {"from": "1568", "to": "4272", "value": 0.125}, {"from": "3924", "to": "3978", "value": 0.10526315789473684}, {"from": "3924", "to": "1973", "value": 0.125}, {"from": "1290", "to": "2473", "value": 0.10434782608695652}, {"from": "1290", "to": "3470", "value": 0.13513513513513514}, {"from": "1290", "to": "1260", "value": 0.12403100775193798}, {"from": "1290", "to": "297", "value": 0.13513513513513514}, {"from": "1903", "to": "4101", "value": 0.23076923076923078}, {"from": "1903", "to": "3032", "value": 0.13333333333333333}, {"from": "1903", "to": "3552", "value": 0.13333333333333333}, {"from": "1903", "to": "1900", "value": 0.125}, {"from": "4101", "to": "3032", "value": 0.13333333333333333}, {"from": "4101", "to": "3484", "value": 0.1111111111111111}, {"from": "2844", "to": "831", "value": 0.1111111111111111}, {"from": "2473", "to": "1167", "value": 0.1095890410958904}, {"from": "864", "to": "4333", "value": 0.13333333333333333}, {"from": "864", "to": "3916", "value": 0.23076923076923078}, {"from": "864", "to": "3484", "value": 0.11764705882352941}, {"from": "864", "to": "2870", "value": 0.1111111111111111}, {"from": "1819", "to": "3901", "value": 0.10526315789473684}, {"from": "1750", "to": "1167", "value": 0.125}, {"from": "794", "to": "3943", "value": 0.1111111111111111}, {"from": "794", "to": "1535", "value": 0.125}, {"from": "794", "to": "1559", "value": 0.1111111111111111}, {"from": "991", "to": "3941", "value": 0.1111111111111111}, {"from": "2220", "to": "3901", "value": 0.13636363636363635}, {"from": "2220", "to": "1643", "value": 0.1111111111111111}, {"from": "2220", "to": "543", "value": 0.10638297872340426}, {"from": "501", "to": "1178", "value": 1.0}, {"from": "2300", "to": "4333", "value": 0.10526315789473684}, {"from": "2300", "to": "3916", "value": 0.1111111111111111}, {"from": "3470", "to": "297", "value": 1.0}, {"from": "3978", "to": "3901", "value": 0.11764705882352941}, {"from": "3032", "to": "620", "value": 0.125}, {"from": "3032", "to": "1559", "value": 0.13333333333333333}, {"from": "3943", "to": "1535", "value": 0.15384615384615385}, {"from": "3831", "to": "2626", "value": 0.11475409836065574}, {"from": "3831", "to": "1260", "value": 0.1038961038961039}, {"from": "3179", "to": "689", "value": 0.11764705882352941}, {"from": "3179", "to": "620", "value": 0.13793103448275862}, {"from": "2587", "to": "3001", "value": 1.0}, {"from": "2587", "to": "276", "value": 1.0}, {"from": "2587", "to": "151", "value": 1.0}, {"from": "2587", "to": "467", "value": 1.0}, {"from": "3567", "to": "3869", "value": 0.125}, {"from": "689", "to": "3552", "value": 0.15}, {"from": "689", "to": "3916", "value": 0.15}, {"from": "689", "to": "3484", "value": 0.13043478260869565}, {"from": "689", "to": "499", "value": 0.16666666666666666}, {"from": "689", "to": "620", "value": 0.15}, {"from": "689", "to": "543", "value": 0.1111111111111111}, {"from": "1167", "to": "1260", "value": 0.11235955056179775}, {"from": "3552", "to": "620", "value": 0.125}, {"from": "3552", "to": "1681", "value": 0.16666666666666666}, {"from": "3869", "to": "1803", "value": 0.1111111111111111}, {"from": "3869", "to": "790", "value": 0.1111111111111111}, {"from": "1803", "to": "790", "value": 0.14285714285714285}, {"from": "4333", "to": "3916", "value": 0.11764705882352941}, {"from": "4333", "to": "831", "value": 0.13333333333333333}, {"from": "2736", "to": "543", "value": 0.10344827586206896}, {"from": "543", "to": "2626", "value": 0.10666666666666667}, {"from": "1795", "to": "217", "value": 0.11764705882352941}, {"from": "3916", "to": "3484", "value": 0.10526315789473684}, {"from": "276", "to": "467", "value": 1.0}, {"from": "276", "to": "3001", "value": 1.0}, {"from": "276", "to": "151", "value": 1.0}, {"from": "831", "to": "2870", "value": 0.17647058823529413}, {"from": "151", "to": "467", "value": 1.0}, {"from": "151", "to": "3001", "value": 1.0}, {"from": "467", "to": "3001", "value": 1.0}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"forceAtlas2Based": {"gravitationalConstant": -50, "centralGravity": 0.01, "springLength": 100, "springConstant": 0.08}, "maxVelocity": 50, "solver": "forceAtlas2Based", "timestep": 0.35, "stabilization": {"iterations": 150}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

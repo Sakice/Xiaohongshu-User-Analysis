@@ -1,0 +1,302 @@
+{
+    "basic_stats": {
+        "total_comments": 3484,
+        "avg_score": 21.810562571756602,
+        "max_score": 3487.0,
+        "top_comments": [
+            {
+                "content": "I joined the app and it\u2019s so funny. Chinese users are teaching us Mandarin and there\u2019s already jokes being made of \u201cI\u2019m your Chinese spy now\u201d and how it\u2019s easier for them to spy on us since we\u2019re on their turf. There\u2019s posts of everyone sharing their pets, dances have made their way over. Americans are sharing rules on how to behave politely following Chinese etiquette since we\u2019re on their app. It\u2019s honestly kind of heartwarming to see how much love is spreading from both sides, it\u2019s been an oddly unifying experience.",
+                "score": 3487
+            },
+            {
+                "content": "I\u2019ve used REDNote/Xiaohongshu before and I think a lot of them are in for a shock when they find out how strict the content guidelines are (especially compared to TikTok).",
+                "score": 3104
+            },
+            {
+                "content": "To a surprising level might I add",
+                "score": 3022
+            },
+            {
+                "content": "RedNote is, apparently, less secure than TikTok.",
+                "score": 2783
+            },
+            {
+                "content": "its going to end 2 ways, rednote gets put behind the firewall or 4chan devise a plan act on it and then it gets put behind the firewall.",
+                "score": 2080
+            }
+        ]
+    },
+    "network_stats": {
+        "nodes": 100,
+        "edges": 225,
+        "avg_degree": 4.5,
+        "clusters": [
+            {
+                "id": 0,
+                "size": 1,
+                "keywords": [
+                    "instagram",
+                    "makes",
+                    "more"
+                ],
+                "avg_score": 0.0
+            },
+            {
+                "id": 1,
+                "size": 1,
+                "keywords": [
+                    "wait.",
+                    "aren\u2019t",
+                    "conservatives"
+                ],
+                "avg_score": 0.0
+            },
+            {
+                "id": 2,
+                "size": 4,
+                "keywords": [
+                    "chinese"
+                ],
+                "avg_score": 3.5
+            },
+            {
+                "id": 3,
+                "size": 1,
+                "keywords": [
+                    "addiction",
+                    "it's",
+                    "complex"
+                ],
+                "avg_score": -1.0
+            },
+            {
+                "id": 4,
+                "size": 1,
+                "keywords": [
+                    "guys",
+                    "should",
+                    "just"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 5,
+                "size": 9,
+                "keywords": [],
+                "avg_score": 7.444444444444445
+            },
+            {
+                "id": 6,
+                "size": 1,
+                "keywords": [
+                    "\u201ciphone",
+                    "america\u201d",
+                    "sorry"
+                ],
+                "avg_score": 0.0
+            },
+            {
+                "id": 7,
+                "size": 10,
+                "keywords": [],
+                "avg_score": 49.7
+            },
+            {
+                "id": 8,
+                "size": 2,
+                "keywords": [
+                    "said",
+                    "ironically."
+                ],
+                "avg_score": 3.0
+            },
+            {
+                "id": 9,
+                "size": 2,
+                "keywords": [
+                    "instagram",
+                    "twitter",
+                    "lmao"
+                ],
+                "avg_score": 7.5
+            },
+            {
+                "id": 10,
+                "size": 1,
+                "keywords": [
+                    "just",
+                    "wait",
+                    "till"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 11,
+                "size": 1,
+                "keywords": [
+                    "country",
+                    "wants"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 12,
+                "size": 16,
+                "keywords": [],
+                "avg_score": 7.3125
+            },
+            {
+                "id": 13,
+                "size": 1,
+                "keywords": [
+                    "follow"
+                ],
+                "avg_score": 6.0
+            },
+            {
+                "id": 14,
+                "size": 16,
+                "keywords": [],
+                "avg_score": 9.0
+            },
+            {
+                "id": 15,
+                "size": 1,
+                "keywords": [
+                    "abandonado",
+                    "mais",
+                    "r\u00e1pido"
+                ],
+                "avg_score": -13.0
+            },
+            {
+                "id": 16,
+                "size": 1,
+                "keywords": [
+                    "packages",
+                    "will",
+                    "wave"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 17,
+                "size": 1,
+                "keywords": [
+                    "you'd",
+                    "perfect"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 18,
+                "size": 2,
+                "keywords": [
+                    "anything",
+                    "avoid"
+                ],
+                "avg_score": 771.0
+            },
+            {
+                "id": 19,
+                "size": 1,
+                "keywords": [
+                    "relate.",
+                    "stick"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 20,
+                "size": 1,
+                "keywords": [
+                    "trying",
+                    "download"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 21,
+                "size": 1,
+                "keywords": [
+                    "bam,",
+                    "found",
+                    "joke."
+                ],
+                "avg_score": 23.0
+            },
+            {
+                "id": 22,
+                "size": 18,
+                "keywords": [],
+                "avg_score": 0.16666666666666666
+            },
+            {
+                "id": 23,
+                "size": 1,
+                "keywords": [
+                    "heard",
+                    "about",
+                    "both"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 24,
+                "size": 1,
+                "keywords": [
+                    "slut",
+                    "virus",
+                    "strong."
+                ],
+                "avg_score": 6.0
+            },
+            {
+                "id": 25,
+                "size": 1,
+                "keywords": [
+                    "![gif](giphy|9elbjocgopmy8)"
+                ],
+                "avg_score": 23.0
+            },
+            {
+                "id": 26,
+                "size": 1,
+                "keywords": [
+                    "right",
+                    "like",
+                    "dang"
+                ],
+                "avg_score": 3.0
+            },
+            {
+                "id": 27,
+                "size": 1,
+                "keywords": [
+                    "boot",
+                    "lickers",
+                    "gonna"
+                ],
+                "avg_score": 3.0
+            },
+            {
+                "id": 28,
+                "size": 1,
+                "keywords": [
+                    "feel",
+                    "like",
+                    "it's"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 29,
+                "size": 1,
+                "keywords": [
+                    "refugee"
+                ],
+                "avg_score": 1.0
+            }
+        ]
+    }
+}

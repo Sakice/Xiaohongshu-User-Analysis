@@ -1,0 +1,307 @@
+{
+    "basic_stats": {
+        "total_comments": 4364,
+        "avg_score": 46.50687442713107,
+        "max_score": 21511.0,
+        "top_comments": [
+            {
+                "content": NaN,
+                "score": 21511
+            },
+            {
+                "content": NaN,
+                "score": 19667
+            },
+            {
+                "content": NaN,
+                "score": 15573
+            },
+            {
+                "content": NaN,
+                "score": 14067
+            },
+            {
+                "content": NaN,
+                "score": 11225
+            }
+        ]
+    },
+    "network_stats": {
+        "nodes": 100,
+        "edges": 126,
+        "avg_degree": 2.52,
+        "clusters": [
+            {
+                "id": 0,
+                "size": 1,
+                "keywords": [],
+                "avg_score": 29.0
+            },
+            {
+                "id": 1,
+                "size": 1,
+                "keywords": [
+                    "mostly",
+                    "singers",
+                    "painters."
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 2,
+                "size": 1,
+                "keywords": [
+                    "asschewally."
+                ],
+                "avg_score": 3.0
+            },
+            {
+                "id": 3,
+                "size": 33,
+                "keywords": [],
+                "avg_score": 16.545454545454547
+            },
+            {
+                "id": 4,
+                "size": 1,
+                "keywords": [
+                    "relax,",
+                    "nobodies",
+                    "blocking"
+                ],
+                "avg_score": -1.0
+            },
+            {
+                "id": 5,
+                "size": 2,
+                "keywords": [
+                    "fucked",
+                    "right?",
+                    "it\u2019s"
+                ],
+                "avg_score": 21.5
+            },
+            {
+                "id": 6,
+                "size": 1,
+                "keywords": [],
+                "avg_score": 1.0
+            },
+            {
+                "id": 7,
+                "size": 1,
+                "keywords": [
+                    "unfortuntly",
+                    "didnt",
+                    "even"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 8,
+                "size": 1,
+                "keywords": [
+                    "foreigners"
+                ],
+                "avg_score": 8.0
+            },
+            {
+                "id": 9,
+                "size": 1,
+                "keywords": [
+                    "lmao"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 10,
+                "size": 8,
+                "keywords": [
+                    "[removed]"
+                ],
+                "avg_score": 5.75
+            },
+            {
+                "id": 11,
+                "size": 1,
+                "keywords": [
+                    "nothing",
+                    "happened",
+                    "june"
+                ],
+                "avg_score": -4.0
+            },
+            {
+                "id": 12,
+                "size": 3,
+                "keywords": [
+                    "[deleted]"
+                ],
+                "avg_score": 1.6666666666666667
+            },
+            {
+                "id": 13,
+                "size": 1,
+                "keywords": [
+                    "bots"
+                ],
+                "avg_score": 3.0
+            },
+            {
+                "id": 14,
+                "size": 12,
+                "keywords": [],
+                "avg_score": 2.0833333333333335
+            },
+            {
+                "id": 15,
+                "size": 1,
+                "keywords": [
+                    "yes.",
+                    "you?"
+                ],
+                "avg_score": 3.0
+            },
+            {
+                "id": 16,
+                "size": 1,
+                "keywords": [
+                    "good",
+                    "thing",
+                    "that\u2019s"
+                ],
+                "avg_score": 31.0
+            },
+            {
+                "id": 17,
+                "size": 1,
+                "keywords": [
+                    "nothing",
+                    "lmao",
+                    "gives"
+                ],
+                "avg_score": 91.0
+            },
+            {
+                "id": 18,
+                "size": 1,
+                "keywords": [
+                    "knows."
+                ],
+                "avg_score": 9.0
+            },
+            {
+                "id": 19,
+                "size": 11,
+                "keywords": [],
+                "avg_score": 2.4545454545454546
+            },
+            {
+                "id": 20,
+                "size": 1,
+                "keywords": [
+                    "china",
+                    "doesn\u2019t",
+                    "follow"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 21,
+                "size": 1,
+                "keywords": [
+                    "being",
+                    "expressive"
+                ],
+                "avg_score": 25.0
+            },
+            {
+                "id": 22,
+                "size": 1,
+                "keywords": [
+                    "https://theintercept.com/2025/01/09/facebook-instagram-meta-hate-speech-content-moderation/"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 23,
+                "size": 2,
+                "keywords": [
+                    "references",
+                    "june"
+                ],
+                "avg_score": 20.5
+            },
+            {
+                "id": 24,
+                "size": 1,
+                "keywords": [
+                    "fucking",
+                    "great",
+                    "reply"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 25,
+                "size": 4,
+                "keywords": [
+                    "serious"
+                ],
+                "avg_score": 2.5
+            },
+            {
+                "id": 26,
+                "size": 1,
+                "keywords": [
+                    "pero",
+                    "dice",
+                    "harry?,"
+                ],
+                "avg_score": 0.0
+            },
+            {
+                "id": 27,
+                "size": 1,
+                "keywords": [
+                    "wake",
+                    "when",
+                    "taiwan"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 28,
+                "size": 1,
+                "keywords": [
+                    "years"
+                ],
+                "avg_score": -4.0
+            },
+            {
+                "id": 29,
+                "size": 1,
+                "keywords": [],
+                "avg_score": 1.0
+            },
+            {
+                "id": 30,
+                "size": 1,
+                "keywords": [
+                    "https://en.m.wikipedia.org/wiki/firefly_(tv_series)"
+                ],
+                "avg_score": 12.0
+            },
+            {
+                "id": 31,
+                "size": 2,
+                "keywords": [
+                    "your",
+                    "then",
+                    "successful"
+                ],
+                "avg_score": 1.0
+            }
+        ]
+    }
+}

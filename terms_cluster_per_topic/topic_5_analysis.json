@@ -1,0 +1,287 @@
+{
+    "basic_stats": {
+        "total_comments": 2563,
+        "avg_score": 12.15840811548966,
+        "max_score": 2300.0,
+        "top_comments": [
+            {
+                "content": "I think I'm going to have an aneurysm if that keeps bleeding out into other social media like tiktok censorship has been. My friend sent me a video of someone talking about some true crime case, and the censorship was the most non-sensical insanity ever.\n\n\n\"After graping the victim, the suspect dismembered the body and scattered the pieces across a public park. When the police came to arrest them, they unalived themselves.\"\u00a0\n\n\nIf you can't even say the word \"killed\", you really have no business discussing true crime stories on this platform! Or the fact that \"kill\" is bad, but brutal descriptions of dismemberment are okay.\u00a0",
+                "score": 2300
+            },
+            {
+                "content": "Quicker than the tiktok ban, tells a story in itself.",
+                "score": 1099
+            },
+            {
+                "content": "So the source is this article that is sourcing another subreddit that is sourcing a random tiktok? Not very reliable",
+                "score": 1030
+            },
+            {
+                "content": "I would like to point out that TikTok is banned in China. Redbox or whatever the fuck it's called, is a watered down censored and spied on app that the Chinese government allowed to operate in TikTok's place inside of China. If you weren't concerned with your data being used by China or being spied on with TikTok, you should be with redbox.",
+                "score": 1021
+            },
+            {
+                "content": "My own, personal Chinese spy? Think of the enemies to lovers' trope I can do!",
+                "score": 798
+            }
+        ]
+    },
+    "network_stats": {
+        "nodes": 100,
+        "edges": 277,
+        "avg_degree": 5.54,
+        "clusters": [
+            {
+                "id": 0,
+                "size": 17,
+                "keywords": [],
+                "avg_score": 4.647058823529412
+            },
+            {
+                "id": 1,
+                "size": 17,
+                "keywords": [],
+                "avg_score": 16.470588235294116
+            },
+            {
+                "id": 2,
+                "size": 1,
+                "keywords": [
+                    "true."
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 3,
+                "size": 1,
+                "keywords": [
+                    "stop",
+                    "china",
+                    "from...what?"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 4,
+                "size": 1,
+                "keywords": [
+                    "china",
+                    "created",
+                    "coronavirus?"
+                ],
+                "avg_score": -15.0
+            },
+            {
+                "id": 5,
+                "size": 1,
+                "keywords": [
+                    "2077,",
+                    "what",
+                    "makes"
+                ],
+                "avg_score": 6.0
+            },
+            {
+                "id": 6,
+                "size": 23,
+                "keywords": [],
+                "avg_score": 12.217391304347826
+            },
+            {
+                "id": 7,
+                "size": 1,
+                "keywords": [
+                    "nothing",
+                    "going",
+                    "tank"
+                ],
+                "avg_score": 0.0
+            },
+            {
+                "id": 8,
+                "size": 16,
+                "keywords": [
+                    "they"
+                ],
+                "avg_score": 1.625
+            },
+            {
+                "id": 9,
+                "size": 1,
+                "keywords": [
+                    "/r/worldnews",
+                    "/r/china",
+                    "funnily"
+                ],
+                "avg_score": 3.0
+            },
+            {
+                "id": 10,
+                "size": 1,
+                "keywords": [
+                    "people",
+                    "count"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 11,
+                "size": 1,
+                "keywords": [
+                    "you\u2019d",
+                    "amazed"
+                ],
+                "avg_score": 113.0
+            },
+            {
+                "id": 12,
+                "size": 1,
+                "keywords": [
+                    "mostly",
+                    "true"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 13,
+                "size": 1,
+                "keywords": [
+                    "theyre",
+                    "not,",
+                    "just"
+                ],
+                "avg_score": 6.0
+            },
+            {
+                "id": 14,
+                "size": 1,
+                "keywords": [
+                    "control"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 15,
+                "size": 1,
+                "keywords": [
+                    "\"because",
+                    "actual",
+                    "tiktok"
+                ],
+                "avg_score": -2.0
+            },
+            {
+                "id": 16,
+                "size": 1,
+                "keywords": [
+                    "sounds",
+                    "like"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 17,
+                "size": 1,
+                "keywords": [
+                    "mean",
+                    "pegasus",
+                    "which"
+                ],
+                "avg_score": 9.0
+            },
+            {
+                "id": 18,
+                "size": 4,
+                "keywords": [],
+                "avg_score": 0.5
+            },
+            {
+                "id": 19,
+                "size": 1,
+                "keywords": [
+                    "state",
+                    "department",
+                    "couldn\u2019t"
+                ],
+                "avg_score": 1.0
+            },
+            {
+                "id": 20,
+                "size": 1,
+                "keywords": [
+                    "sorry",
+                    "most",
+                    "honorable"
+                ],
+                "avg_score": 4.0
+            },
+            {
+                "id": 21,
+                "size": 1,
+                "keywords": [
+                    "just",
+                    "don't",
+                    "count."
+                ],
+                "avg_score": 8.0
+            },
+            {
+                "id": 22,
+                "size": 1,
+                "keywords": [
+                    "will",
+                    "loving",
+                    "wondering"
+                ],
+                "avg_score": 4.0
+            },
+            {
+                "id": 23,
+                "size": 1,
+                "keywords": [
+                    "shits",
+                    "bomb",
+                    "over"
+                ],
+                "avg_score": 2.0
+            },
+            {
+                "id": 24,
+                "size": 1,
+                "keywords": [
+                    "don\u2019t",
+                    "tell",
+                    "tiny"
+                ],
+                "avg_score": 69.0
+            },
+            {
+                "id": 25,
+                "size": 1,
+                "keywords": [
+                    "tiktokers",
+                    "chasing",
+                    "dragon"
+                ],
+                "avg_score": 5.0
+            },
+            {
+                "id": 26,
+                "size": 1,
+                "keywords": [
+                    "fake"
+                ],
+                "avg_score": -10.0
+            },
+            {
+                "id": 27,
+                "size": 1,
+                "keywords": [
+                    "nimaa?",
+                    "ruozhi"
+                ],
+                "avg_score": 1.0
+            }
+        ]
+    }
+}
