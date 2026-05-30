@@ -8,9 +8,9 @@
 from gensim.corpora import Dictionary
 from gensim.models.wrappers import LdaMallet
 
-model_path = 'PKL/lda_model'
-dictionary_path = 'PKL/dictionary.dict'
-model_mallet_path = 'PKL/ldamallet.pkl'
+model_path = 'outputs/PKL/lda_model'
+dictionary_path = 'outputs/PKL/dictionary.dict'
+model_mallet_path = 'outputs/PKL/ldamallet.pkl'
 
 dictionary = Dictionary.load(dictionary_path)
 lda_model = LdaMallet.load(model_path)
@@ -22,7 +22,7 @@ print(lda_model.print_topics(num_topics=5))
 # %% [code]
 import pandas as pd
 
-csv_path = 'reddit_clean_data'  # Replace with the input data file path
+csv_path = 'outputs/reddit_clean_data'  # Replace with the input data file path
 
 df = pd.read_csv(csv_path, encoding='utf-8')
 df
@@ -60,7 +60,7 @@ df.head()
 # %% [code]
 import os
 
-output_dir = "topic_csv_file"  
+output_dir = "outputs/topic_csv_file"  
 os.makedirs(output_dir, exist_ok=True)
 
 lda_model = LdaMallet.load(model_path)
@@ -135,7 +135,7 @@ plt.legend(title='Topic', bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.grid()
 plt.tight_layout()
 
-output_path = "topic_frequency_over_time.png"
+output_path = "outputs/topic_frequency_over_time.png"
 plt.savefig(output_path, dpi=300)
 plt.show()
 
@@ -183,7 +183,7 @@ plt.legend(title='Topic', bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.grid()
 plt.tight_layout()
 
-output_path = "horizon_graph_topic_count_over_time.png"
+output_path = "outputs/horizon_graph_topic_count_over_time.png"
 plt.savefig(output_path, dpi=300)
 plt.show()
 
@@ -395,7 +395,7 @@ def create_interactive_network(G, save_path):
     net.write_html(save_path)
     
 def main():
-   base_dir = 'terms_cluster_per_topic'
+   base_dir = 'outputs/terms_cluster_per_topic'
    topic_files = [f for f in os.listdir(base_dir) if f.startswith('topic_') and f.endswith('.csv')]
    
    all_results = {}
@@ -530,12 +530,12 @@ n_topics = 6
 topic_names = extract_topic_names(lda_model=lda_model, n_topics=n_topics, topn=5)
 
 file_paths = [
-    'topic_csv_file/topic_0.csv',
-    'topic_csv_file/topic_1.csv',
-    'topic_csv_file/topic_2.csv',
-    'topic_csv_file/topic_3.csv',
-    'topic_csv_file/topic_4.csv',
-    'topic_csv_file/topic_5.csv'
+    'outputs/topic_csv_file/topic_0.csv',
+    'outputs/topic_csv_file/topic_1.csv',
+    'outputs/topic_csv_file/topic_2.csv',
+    'outputs/topic_csv_file/topic_3.csv',
+    'outputs/topic_csv_file/topic_4.csv',
+    'outputs/topic_csv_file/topic_5.csv'
 ]  # Replace with actual file paths
 
 aggregated_data = load_and_process_csv(

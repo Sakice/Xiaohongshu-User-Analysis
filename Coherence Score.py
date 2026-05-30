@@ -14,7 +14,7 @@ from gensim.utils import simple_preprocess
 from tqdm import tqdm
 
 
-INPUT_CSV = Path("reddit_data (1).csv")
+INPUT_CSV = Path("data/reddit_data (1).csv")
 MALLET_PATH = Path("mallet-2.0.8/mallet-2.0.8/bin/mallet")
 START_TOPIC_COUNT = 2
 END_TOPIC_COUNT = 50

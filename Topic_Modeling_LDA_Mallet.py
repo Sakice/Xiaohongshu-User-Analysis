@@ -7,13 +7,14 @@
 
 # %% [code]
 import numpy as np
+import os
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 sns.set()
 
 # %% [code]
-df = pd.read_csv('reddit_data (1).csv', encoding='utf-8')
+df = pd.read_csv('data/reddit_data (1).csv', encoding='utf-8')
 df
 
 # %% [code]
@@ -55,12 +56,13 @@ def main(input_file, output_csv):
 
 # Run script
 if __name__ == "__main__":
-    input_csv = "reddit_data (1).csv"  # Input CSV file path
-    output_csv = "reddit_clean_data"  # Output CSV file path
+    input_csv = "data/reddit_data (1).csv"  # Input CSV file path
+    output_csv = "outputs/reddit_clean_data"  # Output CSV file path
+    os.makedirs("outputs/PKL", exist_ok=True)
     main(input_csv, output_csv)
 
 # %% [code]
-df = pd.read_csv('reddit_clean_data', encoding='utf-8')
+df = pd.read_csv('outputs/reddit_clean_data', encoding='utf-8')
 df
 
 # %% [code]
@@ -199,17 +201,17 @@ print('Coherence Score: ', coherence_ldamallet)
 
 # %% [code]
 import pickle
-pickle.dump(ldamallet, open("PKL/ldamallet.pkl", "wb"))
+pickle.dump(ldamallet, open("outputs/PKL/ldamallet.pkl", "wb"))
 
 # %% [code]
-ldamallet.save("PKL/lda_model")
+ldamallet.save("outputs/PKL/lda_model")
 
 # %% [markdown]
 # Save lda model dictionary
 
 # %% [code]
 dictionary = ldamallet.id2word
-dictionary_path = "PKL/dictionary.dict"
+dictionary_path = "outputs/PKL/dictionary.dict"
 dictionary.save(dictionary_path)
 print(f"Dictionary saved to {dictionary_path}")
 
@@ -268,7 +270,7 @@ plt.tight_layout()
 plt.show()
 
 # Save the word cloud figure
-plt.savefig("wordcloud_topics.png", dpi=300, bbox_inches="tight")
+plt.savefig("outputs/wordcloud_topics.png", dpi=300, bbox_inches="tight")
 
 # %% [code]
 from gensim.models.ldamodel import LdaModel
@@ -300,7 +302,7 @@ vis_data = gensimvis.prepare(ldagensim, corpus, id2word, sort_topics=False)
 pyLDAvis.display(vis_data)
 
 # Save visualization results as an HTML file
-pyLDAvis.save_html(vis_data, 'lda_visualization.html')
+pyLDAvis.save_html(vis_data, 'outputs/lda_visualization.html')
 
 # %% [code]
 df

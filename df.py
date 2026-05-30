@@ -5,13 +5,13 @@ from pathlib import Path
 import pandas as pd
 
 
-INPUT_CSV = Path("reddit_data_1.csv")
+INPUT_CSV = Path("data/reddit_data_1.csv")
 
 
 def load_data(path=INPUT_CSV):
     if not path.exists():
         raise FileNotFoundError(
-            "Place reddit_data_1.csv in the project root, or update INPUT_CSV."
+            "Place reddit_data_1.csv in the data folder, or update INPUT_CSV."
         )
     return pd.read_csv(path, encoding="utf-8")
 

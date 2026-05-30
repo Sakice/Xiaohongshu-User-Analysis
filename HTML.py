@@ -5,8 +5,8 @@ from pathlib import Path
 
 
 NOTEBOOKS = [
-    ("Coherence Score.ipynb", "Coherence Score.html"),
-    ("graphs.ipynb", "graphs.html"),
+    ("Coherence Score.ipynb", "outputs/Coherence Score.html"),
+    ("graphs.ipynb", "outputs/graphs.html"),
 ]
 
 
