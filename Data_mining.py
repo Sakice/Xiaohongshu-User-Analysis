@@ -116,14 +116,14 @@ def initialize_reddit_client():
         client_secret=client_secret,
         user_agent=user_agent,
     )
-# 爬取特定时间段内的帖子和评论
+# Fetch posts and comments within the specified time range
 def fetch_posts_and_comments(term):
     reddit = initialize_reddit_client()
     subreddit = reddit.subreddit("all")
     
     data = []
-    end_time = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)  # 昨天午夜
-    start_time = end_time - timedelta(days=32)  # 32天前的午夜
+    end_time = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)  # Midnight yesterday
+    start_time = end_time - timedelta(days=32)  # Midnight 32 days ago
     start_timestamp = start_time.timestamp()
     end_timestamp = end_time.timestamp()
     
@@ -132,7 +132,7 @@ def fetch_posts_and_comments(term):
     for submission in subreddit.search(lower_term, sort="relevance", time_filter="all"):
         post_time = submission.created_utc
         if start_timestamp <= post_time <= end_timestamp:
-            # 添加帖子数据
+            # Add post data
             data.append({
                 "type": "post",
                 "title": submission.title,
@@ -145,7 +145,7 @@ def fetch_posts_and_comments(term):
                 "content": submission.selftext
             })
 
-            # 获取评论
+            # Fetch comments
             submission.comments.replace_more(limit=None)
             for comment in submission.comments.list():
                 comment_time = comment.created_utc
@@ -163,10 +163,10 @@ def fetch_posts_and_comments(term):
                     })
     return pd.DataFrame(data)
 
-# 保存数据到 CSV
+# Save data to CSV
 def save_to_csv(dataframe, filename="reddit_data_last_32_days.csv"):
     dataframe.to_csv(filename, index=False)
-    print(f"数据已保存至 {filename}")
+    print(f"Data saved to {filename}")
 
 if __name__ == "__main__":
     search_term = "rednote"
@@ -174,7 +174,7 @@ if __name__ == "__main__":
     if not data_df.empty:
         save_to_csv(data_df)
     else:
-        print(f"在过去 32 天（截至昨日午夜）期间，没有找到与 '{search_term}' 相关的数据。")
+        print(f"No data found for '{search_term}' in the past 32 days, ending at midnight yesterday.")
 
 # %% [code]
 import os
@@ -209,14 +209,14 @@ def initialize_reddit_client():
 import time
 from praw.exceptions import APIException, RedditAPIException
 
-# 爬取特定时间段内的帖子和评论
+# Fetch posts and comments within the specified time range
 def fetch_posts_and_comments(term):
     reddit = initialize_reddit_client()
     subreddit = reddit.subreddit("all")
     
     data = []
-    end_time = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)  # 昨天午夜
-    start_time = end_time - timedelta(days=32)  # 32天前的午夜
+    end_time = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)  # Midnight yesterday
+    start_time = end_time - timedelta(days=32)  # Midnight 32 days ago
     start_timestamp = start_time.timestamp()
     end_timestamp = end_time.timestamp()
     
@@ -224,10 +224,10 @@ def fetch_posts_and_comments(term):
     
     try:
         for submission in subreddit.search(lower_term, sort="relevance", time_filter="all"):
-            time.sleep(2)  # 每个请求之间暂停 2 秒，减少 429 发生率
+            time.sleep(2)  # Pause 2 seconds between requests to reduce 429 errors
             post_time = submission.created_utc
             if start_timestamp <= post_time <= end_timestamp:
-                # 添加帖子数据
+                # Add post data
                 data.append({
                     "type": "post",
                     "title": submission.title,
@@ -240,10 +240,10 @@ def fetch_posts_and_comments(term):
                     "content": submission.selftext
                 })
 
-                # 获取评论，避免过多 API 请求
+                # Fetch comments while avoiding too many API requests
                 submission.comments.replace_more(limit=0)
                 for comment in submission.comments.list():
-                    time.sleep(1)  # 降低请求频率
+                    time.sleep(1)  # Reduce request frequency
                     comment_time = comment.created_utc
                     if start_timestamp <= comment_time <= end_timestamp:
                         data.append({
@@ -258,17 +258,17 @@ def fetch_posts_and_comments(term):
                             "content": comment.body
                         })
     except (APIException, RedditAPIException) as e:
-        print(f"API 请求失败: {e}")
-        print("暂停 10 分钟后重试...")
-        time.sleep(600)  # 遇到 API 429 限制时，暂停 10 分钟再试
-        return fetch_posts_and_comments(term)  # 递归调用，尝试重新抓取
+        print(f"API request failed: {e}")
+        print("Pausing for 10 minutes before retrying...")
+        time.sleep(600)  # Pause for 10 minutes before retrying after an API 429 rate limit
+        return fetch_posts_and_comments(term)  # Retry by calling the function again
     
     return pd.DataFrame(data)
 
-# 保存数据到 CSV
+# Save data to CSV
 def save_to_csv(dataframe, filename="reddit_data_last_32_days.csv"):
     dataframe.to_csv(filename, index=False)
-    print(f"数据已保存至 {filename}")
+    print(f"Data saved to {filename}")
 
 if __name__ == "__main__":
     search_term = "rednote"
@@ -276,4 +276,4 @@ if __name__ == "__main__":
     if not data_df.empty:
         save_to_csv(data_df)
     else:
-        print(f"在过去 32 天（截至昨日午夜）期间，没有找到与 '{search_term}' 相关的数据。")
+        print(f"No data found for '{search_term}' in the past 32 days, ending at midnight yesterday.")

@@ -8,9 +8,9 @@
 from gensim.corpora import Dictionary
 from gensim.models.wrappers import LdaMallet
 
-model_path = '/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/PKL/lda_model'
-dictionary_path = '/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/PKL/dictionary.dict'
-model_mallet_path = '/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/PKL/ldamallet.pkl'
+model_path = 'PKL/lda_model'
+dictionary_path = 'PKL/dictionary.dict'
+model_mallet_path = 'PKL/ldamallet.pkl'
 
 dictionary = Dictionary.load(dictionary_path)
 lda_model = LdaMallet.load(model_path)
@@ -22,7 +22,7 @@ print(lda_model.print_topics(num_topics=5))
 # %% [code]
 import pandas as pd
 
-csv_path ='/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/reddit_clean_data'  # 替换为输入数据文件路径
+csv_path = 'reddit_clean_data'  # Replace with the input data file path
 
 df = pd.read_csv(csv_path, encoding='utf-8')
 df
@@ -60,7 +60,7 @@ df.head()
 # %% [code]
 import os
 
-output_dir = "/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/topic_csv_file"  
+output_dir = "topic_csv_file"  
 os.makedirs(output_dir, exist_ok=True)
 
 lda_model = LdaMallet.load(model_path)
@@ -424,7 +424,7 @@ def create_interactive_network(G, save_path):
     net = Network(notebook=True, cdn_resources='remote')
     communities = community.best_partition(G)
     
-    # 修改节点显示
+    # Update node display
     for node in G.nodes():
         node_data = G.nodes[node]
         score = node_data.get('score', 0)
@@ -443,7 +443,7 @@ def create_interactive_network(G, save_path):
                     label=f"Score: {score}", 
                     color=f'#{"%06x" % np.random.randint(0, 0xFFFFFF)}')
     
-    # 其他代码保持不变
+    # Keep the remaining code unchanged
     
     for edge in G.edges():
         net.add_edge(str(edge[0]), str(edge[1]), value=G.get_edge_data(*edge)['weight'])
@@ -469,7 +469,7 @@ def create_interactive_network(G, save_path):
     net.write_html(save_path)
     
 def main():
-   base_dir = '/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/terms_cluster_per_topic'
+   base_dir = 'terms_cluster_per_topic'
    topic_files = [f for f in os.listdir(base_dir) if f.startswith('topic_') and f.endswith('.csv')]
    
    all_results = {}
@@ -549,9 +549,9 @@ def extract_topic_names(lda_model, n_topics, topn=5):
     """
     topic_names = []
     for topic_id in range(n_topics):
-        # 提取主题的前几个关键词
+        # Extract the top keywords for each topic
         words = [word for word, _ in lda_model.show_topic(topic_id, topn=topn)]
-        topic_names.append(", ".join(words))  # 将关键词拼接成名称
+        topic_names.append(", ".join(words))  # Join keywords into a name
     return topic_names
 
 def load_and_process_csv(file_paths, date_column, score_column, time_unit='D'):
@@ -564,14 +564,14 @@ def load_and_process_csv(file_paths, date_column, score_column, time_unit='D'):
     aggregated_data = {}
     
     for file_path in file_paths:
-        # 加载数据
+        # Load data
         df = pd.read_csv(file_path)
-        df[date_column] = pd.to_datetime(df[date_column])  # 确保日期列为 datetime 格式
+        df[date_column] = pd.to_datetime(df[date_column])  # Ensure the date column uses datetime format
         
-        # 按时间聚合情感分数
-        df['time'] = df[date_column].dt.to_period(time_unit)  # 转为时间段
+        # Aggregate sentiment scores over time
+        df['time'] = df[date_column].dt.to_period(time_unit)  # Convert to a time period
         agg_df = df.groupby('time')[score_column].mean().reset_index()
-        agg_df['time'] = agg_df['time'].dt.to_timestamp()  # 转回时间戳
+        agg_df['time'] = agg_df['time'].dt.to_timestamp()  # Convert back to a timestamp
         aggregated_data[file_path] = agg_df
     
     return aggregated_data
@@ -585,12 +585,12 @@ def plot_combined_sentiment(aggregated_data, time_column, score_column, topic_na
     """
     plt.figure(figsize=(12, 8))
     
-    # 遍历数据，为每个文件绘图并设置图例
+    # Iterate through data, plot each file, and set the legend
     for i, (file_path, data) in enumerate(aggregated_data.items()):
-        label = topic_names[i] if i < len(topic_names) else f"Topic{i}"  # 映射主题名称
+        label = topic_names[i] if i < len(topic_names) else f"Topic{i}"  # Map topic names
         plt.plot(data[time_column], data[score_column], marker='o', label=label)
     
-    # 图表设置
+    # Chart settings
     plt.title('Sentiment Score Over Time', fontsize=16)
     plt.xlabel('Time', fontsize=14)
     plt.ylabel('Average Sentiment Score', fontsize=14)
@@ -604,19 +604,19 @@ n_topics = 6
 topic_names = extract_topic_names(lda_model=lda_model, n_topics=n_topics, topn=5)
 
 file_paths = [
-    '/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/topic_csv_file/topic_0.csv',
-    '/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/topic_csv_file/topic_1.csv',
-    '/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/topic_csv_file/topic_2.csv',
-    '/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/topic_csv_file/topic_3.csv',
-    '/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/topic_csv_file/topic_4.csv',
-    '/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/topic_csv_file/topic_5.csv'
-]  # 替换为实际文件路径
+    'topic_csv_file/topic_0.csv',
+    'topic_csv_file/topic_1.csv',
+    'topic_csv_file/topic_2.csv',
+    'topic_csv_file/topic_3.csv',
+    'topic_csv_file/topic_4.csv',
+    'topic_csv_file/topic_5.csv'
+]  # Replace with actual file paths
 
 aggregated_data = load_and_process_csv(
     file_paths=file_paths, 
     date_column='created', 
     score_column='sentiment_score', 
-    time_unit='D'  # 按天聚合
+    time_unit='D'  # Aggregate by day
 )
 
 plot_combined_sentiment(aggregated_data, time_column='time', score_column='sentiment_score', topic_names=topic_names)
@@ -637,8 +637,8 @@ def plot_sentiment_distribution(df, score_column='sentiment_score', bins=30):
     plt.tight_layout()
     plt.show()
 
-# 示例调用
-# 假设 df 是包含 sentiment_score 列的 DataFrame
+# Example call
+# Assume df is a DataFrame containing the sentiment_score column
 plot_sentiment_distribution(df, score_column='sentiment_score')
 
 # %% [markdown]
@@ -718,7 +718,7 @@ def extract_topic_names(lda_model, n_topics, topn=5):
     topic_names = {}
     for topic_id in range(n_topics):
         words = [word for word, _ in lda_model.show_topic(topic_id, topn=topn)]
-        topic_names[topic_id] = ", ".join(words)  # 将关键词拼接成主题名称
+        topic_names[topic_id] = ", ".join(words)  # Join keywords into a topic name
     return topic_names
 
 def plot_topic_sentiment_density(df, lda_model, topic_column='topic', score_column='sentiment_score', n_topics=6, topn=5):
@@ -783,7 +783,7 @@ def extract_top_words_from_lda(lda_model, num_topics, topn):
         for word, weight in topic_words:
             overall_word_weights[word] += weight
     
-    # 排序并提取前 topn 个关键词
+    # Sort and extract the top n keywords
     sorted_words = sorted(overall_word_weights.items(), key=lambda x: x[1], reverse=True)
     top_words = [word for word, _ in sorted_words[:topn]]
     return top_words
@@ -850,7 +850,7 @@ def get_top_words_per_topic(lda_model, num_topics=6, top_n=6):
     """
     top_words = {}
     for topic_id in range(num_topics):
-        # 获取主题的前 top_n 个关键词
+        # Get the top_n keywords for the topic
         words = lda_model.show_topic(topic_id, topn=top_n)
         top_words[f"Topic {topic_id}"] = words
     return top_words

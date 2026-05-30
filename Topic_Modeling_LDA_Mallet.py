@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 sns.set()
 
 # %% [code]
-df = pd.read_csv('/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/reddit_data (1).csv', encoding='utf-8')
+df = pd.read_csv('reddit_data (1).csv', encoding='utf-8')
 df
 
 # %% [code]
@@ -23,44 +23,44 @@ df.info()
 import pandas as pd
 import re
 
-# 加载数据
+# Load data
 def load_data(file_path):
     return pd.read_csv(file_path)
 
-# 数据清洗
+# Clean data
 def clean_text(text):
-    # 去除 URL、无意义单词和特殊字符
-    text = re.sub(r"http\S+|www\S+", "", text)  # 移除 URL
-    text = re.sub(r"[^a-zA-Z\s]", "", text)    # 移除非字母字符
-    text = re.sub(r"\b\w{1,2}\b", "", text)    # 移除1-2个字符的单词
-    text = text.lower()                        # 转为小写
+    # Remove URLs, low-information words, and special characters
+    text = re.sub(r"http\S+|www\S+", "", text)  # Remove URLs
+    text = re.sub(r"[^a-zA-Z\s]", "", text)    # Remove non-letter characters
+    text = re.sub(r"\b\w{1,2}\b", "", text)    # Remove 1-2 character words
+    text = text.lower()                        # Convert to lowercase
     return text.strip()
 
 def clean_data(df, column_name):
     df[column_name] = df[column_name].fillna("").apply(clean_text)
     return df
 
-# 主函数
+# Main function
 def main(input_file, output_csv):
-    # 加载数据
+    # Load data
     df = load_data(input_file)
 
-    # 数据清洗
+    # Clean data
     df = clean_data(df, 'content')
 
-    # 保存清洗和分析后的数据
+    # Save cleaned and analyzed data
     df.to_csv(output_csv, index=False)
-    print(f"清洗后的数据已保存至 {output_csv}")
+    print(f"Cleaned data saved to {output_csv}")
 
 
-# 运行脚本
+# Run script
 if __name__ == "__main__":
-    input_csv = "/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/reddit_data (1).csv"  # 输入 CSV 文件路径
-    output_csv = "/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/reddit_clean_data"  # 输出 CSV 文件路径
+    input_csv = "reddit_data (1).csv"  # Input CSV file path
+    output_csv = "reddit_clean_data"  # Output CSV file path
     main(input_csv, output_csv)
 
 # %% [code]
-df = df = pd.read_csv('/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/reddit_clean_data', encoding='utf-8')
+df = df = pd.read_csv('reddit_clean_data', encoding='utf-8')
 df
 
 # %% [code]
@@ -178,7 +178,7 @@ print('Total Vocabulary Size:', len(id2word))
 corpus = [id2word.doc2bow(text) for text in data_ready]
 
 # %% [code]
-mallet_path = '/Users/sakice/Downloads/mallet-2.0.8/bin/mallet'
+mallet_path = 'mallet-2.0.8/mallet-2.0.8/bin/mallet'
 
 # %% [code]
 ldamallet = gensim.models.wrappers.LdaMallet(mallet_path, corpus=corpus, num_topics=6, id2word=id2word)
@@ -199,17 +199,17 @@ print('Coherence Score: ', coherence_ldamallet)
 
 # %% [code]
 import pickle
-pickle.dump(ldamallet, open("/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/PKL/ldamallet.pkl", "wb"))
+pickle.dump(ldamallet, open("PKL/ldamallet.pkl", "wb"))
 
 # %% [code]
-ldamallet.save("/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/PKL/lda_model")
+ldamallet.save("PKL/lda_model")
 
 # %% [markdown]
 # Save lda model dictionary
 
 # %% [code]
 dictionary = ldamallet.id2word
-dictionary_path = "/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/analysis_notebook/PKL/dictionary.dict"
+dictionary_path = "PKL/dictionary.dict"
 dictionary.save(dictionary_path)
 print(f"Dictionary saved to {dictionary_path}")
 
@@ -244,18 +244,18 @@ topics_df
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
-# 初始化 WordCloud 对象
+# Initialize the WordCloud object
 wc = WordCloud(background_color="white", colormap="Dark2", max_font_size=150, random_state=42)
 
-# 设置图表尺寸
+# Set figure size
 plt.rcParams['figure.figsize'] = [20, 15]
 
-# 动态设置子图布局
-rows = 2  # 行数
-cols = 3  # 列数
+# Set the subplot layout dynamically
+rows = 2  # Number of rows
+cols = 3  # Number of columns
 
-# 遍历主题生成词云
-for i in range(min(len(topics_df), rows * cols)):  # 确保不超出主题数量
+# Generate word clouds for each topic
+for i in range(min(len(topics_df), rows * cols)):  # Ensure the topic count is not exceeded
     wc.generate(text=topics_df["Terms per Topic"][i])
     
     plt.subplot(rows, cols, i + 1)
@@ -263,11 +263,11 @@ for i in range(min(len(topics_df), rows * cols)):  # 确保不超出主题数量
     plt.axis("off")
     plt.title(f"Topic {topics_df.index[i]}")
 
-# 显示图表
+# Show the figure
 plt.tight_layout()
 plt.show()
 
-# 保存词云图
+# Save the word cloud figure
 plt.savefig("wordcloud_topics.png", dpi=300, bbox_inches="tight")
 
 # %% [code]
@@ -293,13 +293,13 @@ pyLDAvis.display(vis_data)
 import pyLDAvis.gensim as gensimvis
 import pyLDAvis
 
-# 准备可视化数据
+# Prepare visualization data
 vis_data = gensimvis.prepare(ldagensim, corpus, id2word, sort_topics=False)
 
-# 显示可视化结果
+# Display visualization results
 pyLDAvis.display(vis_data)
 
-# 将可视化结果保存为 HTML 文件
+# Save visualization results as an HTML file
 pyLDAvis.save_html(vis_data, 'lda_visualization.html')
 
 # %% [code]

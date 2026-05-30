@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 sns.set()
 
 # %% [code]
-df = pd.read_csv('/Users/sakice/Library/Mobile Documents/com~apple~CloudDocs/Documents/DP/reddit_data (1).csv', encoding='utf-8')
+df = pd.read_csv('reddit_data (1).csv', encoding='utf-8')
 df
 
 # %% [code]
@@ -76,7 +76,7 @@ print('Total Vocabulary Size:', len(id2word))
 corpus = [id2word.doc2bow(text) for text in data_ready]
 
 # %% [code]
-mallet_path = '/Users/sakice/Downloads/mallet-2.0.8/bin/mallet'
+mallet_path = 'mallet-2.0.8/mallet-2.0.8/bin/mallet'
 
 # %% [code]
 # display a progress meter
